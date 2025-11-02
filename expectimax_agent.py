@@ -93,5 +93,3 @@ class ExpectimaxAgent(Agent):
             avg_nodes = self.total_nodes / self.total_moves
             avg_time = self.total_time / self.total_moves
             print("ExpectimaxAgent | AvgNodesPerMove =", avg_nodes, "| AvgTimePerMove =", avg_time, "s")
-        else:
-            print("ExpectimaxAgent | No moves made.")
