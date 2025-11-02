@@ -32,6 +32,8 @@ class ExpectimaxAgent(Agent):
         return action
 
     def expectimax(self, state: GameState, depth_limit, current_depth):
+        self.nodes_this_move += 1  # count explored node
+
         """
         Recursive Expectimax returning (value, best_action)
         
