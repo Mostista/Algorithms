@@ -3,14 +3,27 @@ from agent_base import Agent
 from game import GameState
 from evaluation import betterEvaluationFunction
 import math
+import time
 
 class ExpectimaxAgent(Agent):
+    def __init__(self):
+        super().__init__()
+        self.total_nodes = 0
+        self.total_time = 0
+        self.total_moves = 0
+    
     def get_action(self, state: GameState, depth=None):
+        start_time = time.time()
+        self.nodes_this_move = 0  # reset counter each move
         """
         Returns the best move index (0-8) using Expectimax search.
         Handles stochastic (non-optimal) opponent moves.
         """
         value, action = self.expectimax(state, depth_limit=depth, current_depth=0)
+        # this is to keep track of total nodes and time to later graph and compare between agents
+        self.total_moves += 1
+        self.total_nodes += self.nodes_this_move
+        self.total_time += (time.time() - start_time)
         # Safety fallback in case no action is found
         if action is None:
             legal = state.get_legal_actions()
@@ -72,3 +85,11 @@ class ExpectimaxAgent(Agent):
 
             expected_value = sum_of_values / num_actions
             return (expected_value, None)
+
+    def __del__(self):
+        if self.total_moves > 0:
+            avg_nodes = self.total_nodes / self.total_moves
+            avg_time = self.total_time / self.total_moves
+            print("ExpectimaxAgent | AvgNodesPerMove =", avg_nodes, "| AvgTimePerMove =", avg_time, "s")
+        else:
+            print("ExpectimaxAgent | No moves made.")
