@@ -55,14 +55,14 @@ class ExpectimaxAgent(Agent):
                 value, _ = self.expectimax(new_state, depth_limit, current_depth + 1)
 
                 if value > best_value:
-                    value = best_value
+                    best_value = value
                     best_action = action
             return (best_value, best_action)
         
         else:
             num_actions = len(legal_actions)
             if num_actions == 0:
-                return state.utility, None
+                return state.utility(), None
             
             sum_of_values = 0
             for action in legal_actions:
