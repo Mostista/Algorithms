@@ -41,7 +41,7 @@ class AlphaBetaAgent(Agent):
         if state.is_terminal():
             return (state.utility(), None)
         
-        if depth_limit is not None and depth_limit >= current_depth:
+        if depth_limit is not None and current_depth >= depth_limit:
             return (betterEvaluationFunction(state), None)
         
         best_action = None
@@ -54,7 +54,7 @@ class AlphaBetaAgent(Agent):
 
                 child_value, _ = self.alphabeta(new_state, alpha, beta, depth_limit, current_depth + 1)
 
-                if child_value >= value:
+                if child_value > value:
                     value = child_value
                     best_action = action
 
